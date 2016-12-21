@@ -14,9 +14,28 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController">
                     <items>
-                        <button width="1" alignment="left" title="Upload Valid File" id="cek-fL-jaD">
+                        <group width="1" alignment="left" id="szw-Oo-Khn">
+                            <items>
+                                <button width="0.33000000000000002" alignment="left" title="1" id="cek-fL-jaD">
+                                    <connections>
+                                        <action selector="sendFile1ToPhone" destination="AgC-eL-Hgc" id="6oP-8S-gkr"/>
+                                    </connections>
+                                </button>
+                                <button width="0.33000000000000002" alignment="left" title="2" id="Hls-uN-wfh">
+                                    <connections>
+                                        <action selector="sendFile2ToPhone" destination="AgC-eL-Hgc" id="rfb-LW-nB6"/>
+                                    </connections>
+                                </button>
+                                <button width="0.33000000000000002" alignment="left" title="3" id="diE-GV-zmD">
+                                    <connections>
+                                        <action selector="sendFile3ToPhone" destination="AgC-eL-Hgc" id="OGO-XP-cvv"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                        <button width="1" alignment="left" title="All Files" id="X83-00-AfK">
                             <connections>
-                                <action selector="uploadFileToPhone" destination="AgC-eL-Hgc" id="JPx-1S-lIX"/>
+                                <action selector="uploadAllFilesToPhone" destination="AgC-eL-Hgc" id="VJw-Hq-Zn3"/>
                             </connections>
                         </button>
                         <label alignment="left" text="Attempted: 0" id="ZSc-ho-89h"/>
@@ -27,7 +46,6 @@
                         <outlet property="fileTransferStatusLabel" destination="XSe-8a-VbO" id="Loo-oA-59W"/>
                         <outlet property="outstandingFileCountLabel" destination="f7Y-eG-lxo" id="3gu-8R-hAX"/>
                         <outlet property="transferredFileLabel" destination="ZSc-ho-89h" id="CG0-qW-Gub"/>
-                        <outlet property="uploadButton" destination="cek-fL-jaD" id="pIj-iV-oXL"/>
                     </connections>
                 </controller>
             </objects>

@@ -90,16 +90,34 @@
 
 #pragma mark - Actions
 
-- (IBAction)uploadFileToPhone
+- (void)sendFilePathToPhone:(NSString *)filePath
 {
-    NSArray<NSString *> *fileNames = @[@"stuff", @"stuff1", @"stuff2"];
-    for (NSString *fileName in fileNames) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
-        NSURL *fileURL = [NSURL fileURLWithPath:path];
-        [self.session transferFile:fileURL metadata:@{@"Crap metadata" : @"stuff"}];
-    }
+    NSString *path = [[NSBundle mainBundle] pathForResource:filePath ofType:@"txt"];
+    NSURL *fileURL = [NSURL fileURLWithPath:path];
+    [self.session transferFile:fileURL metadata:@{@"Crap metadata" : @"stuff"}];
+    self.attemptedFileTransfers++;
+}
 
-    self.attemptedFileTransfers += 3;
+- (IBAction)uploadAllFilesToPhone
+{
+    [self sendFile1ToPhone];
+    [self sendFile2ToPhone];
+    [self sendFile3ToPhone];
+}
+
+- (IBAction)sendFile1ToPhone
+{
+    [self sendFilePathToPhone:@"stuff"];
+}
+
+- (IBAction)sendFile2ToPhone
+{
+    [self sendFilePathToPhone:@"stuff1"];
+}
+
+- (IBAction)sendFile3ToPhone
+{
+    [self sendFilePathToPhone:@"stuff2"];
 }
 
 - (void)updateOutstandingFileLabel
