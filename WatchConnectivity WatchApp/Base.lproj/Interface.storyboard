@@ -19,13 +19,14 @@
                                 <action selector="uploadFileToPhone" destination="AgC-eL-Hgc" id="JPx-1S-lIX"/>
                             </connections>
                         </button>
-                        <label alignment="left" text="Transfer:" id="ZSc-ho-89h"/>
-                        <label alignment="left" text="SUCCESS" id="XSe-8a-VbO"/>
-                        <label alignment="left" text="Outs files: 45" id="f7Y-eG-lxo"/>
+                        <label alignment="left" text="Attempted: 0" id="ZSc-ho-89h"/>
+                        <label alignment="left" text="Complete: 0" id="XSe-8a-VbO"/>
+                        <label alignment="left" text="Outstanding: 0" id="f7Y-eG-lxo"/>
                     </items>
                     <connections>
                         <outlet property="fileTransferStatusLabel" destination="XSe-8a-VbO" id="Loo-oA-59W"/>
                         <outlet property="outstandingFileCountLabel" destination="f7Y-eG-lxo" id="3gu-8R-hAX"/>
+                        <outlet property="transferredFileLabel" destination="ZSc-ho-89h" id="CG0-qW-Gub"/>
                         <outlet property="uploadButton" destination="cek-fL-jaD" id="pIj-iV-oXL"/>
                     </connections>
                 </controller>

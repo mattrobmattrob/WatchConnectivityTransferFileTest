@@ -13,8 +13,15 @@
 @interface InterfaceController() <WCSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet WKInterfaceButton *uploadButton;
+
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *fileTransferStatusLabel;
-@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *outstandingFileCountLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *transferredFileLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *outstandingFileCountLabel;
+
+
+@property (assign, nonatomic) NSUInteger outstandingFileCount;
+@property (assign, nonatomic) NSUInteger completeFileTransfers;
+@property (assign, nonatomic) NSUInteger attemptedFileTransfers;
 
 @property (strong, nonatomic) WCSession *session;
 
@@ -36,7 +43,12 @@
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
 
-    [self.outstandingFileCountLabel setText:[NSString stringWithFormat:@"Outs files: %lu", (unsigned long)self.session.outstandingFileTransfers.count]];
+    self.outstandingFileCount = self.session.outstandingFileTransfers.count;
+
+    __weak typeof(self) weakSelf = self;
+    [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        [weakSelf updateOutstandingFileLabel];
+    }];
 }
 
 - (void)didDeactivate {
@@ -44,18 +56,55 @@
     [super didDeactivate];
 }
 
+#pragma mark - Accessors
+
+- (void)setAttemptedFileTransfers:(NSUInteger)attemptedFileTransfers
+{
+    if (_attemptedFileTransfers != attemptedFileTransfers) {
+        _attemptedFileTransfers = attemptedFileTransfers;
+
+        NSString *fileCountString = [NSString stringWithFormat:@"Attempted: %lu", (unsigned long)attemptedFileTransfers];
+        [self.transferredFileLabel setText:fileCountString];
+    }
+}
+
+- (void)setCompleteFileTransfers:(NSUInteger)completeFileTransfers
+{
+    if (_completeFileTransfers != completeFileTransfers) {
+        _completeFileTransfers = completeFileTransfers;
+
+        NSString *fileCountString = [NSString stringWithFormat:@"Complete: %lu", (unsigned long)completeFileTransfers];
+        [self.fileTransferStatusLabel setText:fileCountString];
+    }
+}
+
+- (void)setOutstandingFileCount:(NSUInteger)outstandingFileCount
+{
+    if (_outstandingFileCount != outstandingFileCount) {
+        _outstandingFileCount = outstandingFileCount;
+
+        NSString *fileCountString = [NSString stringWithFormat:@"Outstanding: %lu", (unsigned long)_outstandingFileCount];
+        [self.outstandingFileCountLabel setText:fileCountString];
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)uploadFileToPhone
 {
-    [self.fileTransferStatusLabel setText:@"Starting transfer..."];
-
     NSArray<NSString *> *fileNames = @[@"stuff", @"stuff1", @"stuff2"];
     for (NSString *fileName in fileNames) {
         NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
         NSURL *fileURL = [NSURL fileURLWithPath:path];
         [self.session transferFile:fileURL metadata:@{@"Crap metadata" : @"stuff"}];
     }
+
+    self.attemptedFileTransfers += 3;
+}
+
+- (void)updateOutstandingFileLabel
+{
+    self.outstandingFileCount = self.session.outstandingFileTransfers.count;
 }
 
 #pragma mark - WCSessionDelegate
@@ -127,13 +176,9 @@
 - (void)session:(WCSession *)session didFinishFileTransfer:(WCSessionFileTransfer *)fileTransfer error:(nullable NSError *)error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (nil == error) {
-            [self.fileTransferStatusLabel setText:@"Success!"];
-        } else {
-            [self.fileTransferStatusLabel setText:@"Failure!"];
-        }
+        self.completeFileTransfers++;
 
-        [self.outstandingFileCountLabel setText:[NSString stringWithFormat:@"Outs files: %lu", (unsigned long)self.session.outstandingFileTransfers.count]];
+        [self updateOutstandingFileLabel];
     });
 }
 

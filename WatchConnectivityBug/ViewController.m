@@ -10,7 +10,7 @@
 
 #import <WatchConnectivity/WatchConnectivity.h>
 
-@interface ViewController ()
+@interface ViewController () <WCSessionDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *fileCountLabel;
 
