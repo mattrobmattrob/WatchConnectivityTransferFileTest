@@ -1,38 +1,61 @@
 //
-//  ViewController.m
-//  WatchConnectivityBug
+//  InterfaceController.m
+//  WatchConnectivity WatchApp Extension
 //
 //  Created by Matt Robinson on 12/21/16.
 //  Copyright © 2016 MattRobinson. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "InterfaceController.h"
 
 #import <WatchConnectivity/WatchConnectivity.h>
 
-@interface ViewController ()
+@interface InterfaceController() <WCSessionDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *fileCountLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceButton *uploadButton;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *fileTransferStatusLabel;
+@property (unsafe_unretained, nonatomic) IBOutlet WKInterfaceLabel *outstandingFileCountLabel;
 
 @property (strong, nonatomic) WCSession *session;
-@property (assign, nonatomic) NSUInteger fileTransferCount;
 
 @end
 
-@implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+@implementation InterfaceController
+
+- (void)awakeWithContext:(id)context
+{
+    [super awakeWithContext:context];
 
     self.session = [WCSession defaultSession];
     self.session.delegate = self;
     [self.session activateSession];
 }
 
+- (void)willActivate {
+    // This method is called when watch view controller is about to be visible to user
+    [super willActivate];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.outstandingFileCountLabel setText:[NSString stringWithFormat:@"Outs files: %lu", (unsigned long)self.session.outstandingFileTransfers.count]];
+}
+
+- (void)didDeactivate {
+    // This method is called when watch view controller is no longer visible
+    [super didDeactivate];
+}
+
+#pragma mark - Actions
+
+- (IBAction)uploadFileToPhone
+{
+    [self.fileTransferStatusLabel setText:@"Starting transfer..."];
+
+    NSArray<NSString *> *fileNames = @[@"stuff", @"stuff1", @"stuff2"];
+    for (NSString *fileName in fileNames) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"];
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        [self.session transferFile:fileURL metadata:@{@"Crap metadata" : @"stuff"}];
+    }
 }
 
 #pragma mark - WCSessionDelegate
@@ -103,14 +126,23 @@
 
 - (void)session:(WCSession *)session didFinishFileTransfer:(WCSessionFileTransfer *)fileTransfer error:(nullable NSError *)error
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (nil == error) {
+            [self.fileTransferStatusLabel setText:@"Success!"];
+        } else {
+            [self.fileTransferStatusLabel setText:@"Failure!"];
+        }
 
+        [self.outstandingFileCountLabel setText:[NSString stringWithFormat:@"Outs files: %lu", (unsigned long)self.session.outstandingFileTransfers.count]];
+    });
 }
 
 - (void)session:(WCSession *)session didReceiveFile:(WCSessionFile *)file
 {
-    self.fileTransferCount++;
-
-    [self.fileCountLabel setText:[@(self.fileTransferCount) stringValue]];
+    
 }
 
 @end
+
+
+

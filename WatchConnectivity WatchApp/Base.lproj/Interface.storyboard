@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController">
+                    <items>
+                        <button width="1" alignment="left" title="Upload Valid File" id="cek-fL-jaD">
+                            <connections>
+                                <action selector="uploadFileToPhone" destination="AgC-eL-Hgc" id="JPx-1S-lIX"/>
+                            </connections>
+                        </button>
+                        <label alignment="left" text="Transfer:" id="ZSc-ho-89h"/>
+                        <label alignment="left" text="SUCCESS" id="XSe-8a-VbO"/>
+                        <label alignment="left" text="Outs files: 45" id="f7Y-eG-lxo"/>
+                    </items>
+                    <connections>
+                        <outlet property="fileTransferStatusLabel" destination="XSe-8a-VbO" id="Loo-oA-59W"/>
+                        <outlet property="outstandingFileCountLabel" destination="f7Y-eG-lxo" id="3gu-8R-hAX"/>
+                        <outlet property="uploadButton" destination="cek-fL-jaD" id="pIj-iV-oXL"/>
+                    </connections>
+                </controller>
+            </objects>
+        </scene>
+    </scenes>
+</document>
