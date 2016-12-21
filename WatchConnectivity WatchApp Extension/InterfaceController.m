@@ -12,12 +12,9 @@
 
 @interface InterfaceController() <WCSessionDelegate>
 
-@property (weak, nonatomic) IBOutlet WKInterfaceButton *uploadButton;
-
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *fileTransferStatusLabel;
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *transferredFileLabel;
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *outstandingFileCountLabel;
-
 
 @property (assign, nonatomic) NSUInteger outstandingFileCount;
 @property (assign, nonatomic) NSUInteger completeFileTransfers;
