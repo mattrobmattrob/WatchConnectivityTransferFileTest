@@ -108,9 +108,11 @@
 
 - (void)session:(WCSession *)session didReceiveFile:(WCSessionFile *)file
 {
-    self.fileTransferCount++;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.fileTransferCount++;
 
-    [self.fileCountLabel setText:[@(self.fileTransferCount) stringValue]];
+        [self.fileCountLabel setText:[@(self.fileTransferCount) stringValue]];
+    });
 }
 
 @end
