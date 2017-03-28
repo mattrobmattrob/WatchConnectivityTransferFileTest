@@ -16,10 +16,6 @@
 
 - (void)applicationDidFinishLaunching {
     // Perform any final initialization of your application.
-
-    WCSession *session = [WCSession defaultSession];
-    session.delegate = self;
-    [session activateSession];
 }
 
 - (void)applicationDidBecomeActive {

@@ -66,12 +66,13 @@
 
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message
 {
-
+    NSLog(@"didReceiveMessage:\n%@", message);
 }
 
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler
 {
-
+    NSLog(@"didReceiveMessage:replyHandler:\n%@", message);
+    replyHandler(@{ @"REPLY" : @"GOOD" });
 }
 
 - (void)session:(WCSession *)session didReceiveMessageData:(NSData *)messageData

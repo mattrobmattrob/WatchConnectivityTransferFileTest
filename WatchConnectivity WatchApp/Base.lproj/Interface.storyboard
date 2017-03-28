@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
     <device id="watch38" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="12029"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -41,6 +41,30 @@
                         <label alignment="left" text="Attempted: 0" id="ZSc-ho-89h"/>
                         <label alignment="left" text="Complete: 0" id="XSe-8a-VbO"/>
                         <label alignment="left" text="Outstanding: 0" id="f7Y-eG-lxo"/>
+                        <group width="1" alignment="left" layout="vertical" id="HTc-fS-DGZ">
+                            <items>
+                                <button width="1" alignment="left" title="Send Message (0, 0)" id="ALc-gE-vpX">
+                                    <connections>
+                                        <action selector="sendMessageNoHandlers" destination="AgC-eL-Hgc" id="ju1-eZ-q2l"/>
+                                    </connections>
+                                </button>
+                                <button width="1" alignment="left" title="Send Message (0,1)" id="NOF-at-k0a">
+                                    <connections>
+                                        <action selector="sendMessageErrorHandler" destination="AgC-eL-Hgc" id="S6H-5A-fHd"/>
+                                    </connections>
+                                </button>
+                                <button width="1" alignment="left" title="Send Message (1,0)" id="CWL-yz-w6o">
+                                    <connections>
+                                        <action selector="sendMessageReplyHandler" destination="AgC-eL-Hgc" id="yfN-BY-jFO"/>
+                                    </connections>
+                                </button>
+                                <button width="1" alignment="left" title="Send Message (1,1)" id="O4K-6H-bHU">
+                                    <connections>
+                                        <action selector="sendMessageBothHandlers" destination="AgC-eL-Hgc" id="9jt-dg-8h0"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
                     </items>
                     <connections>
                         <outlet property="fileTransferStatusLabel" destination="XSe-8a-VbO" id="Loo-oA-59W"/>

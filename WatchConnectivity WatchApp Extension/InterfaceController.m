@@ -122,6 +122,41 @@
     self.outstandingFileCount = self.session.outstandingFileTransfers.count;
 }
 
+- (IBAction)sendMessageNoHandlers
+{
+    [self.session sendMessage:@{ @"Message" : @(45) }
+                 replyHandler:nil
+                 errorHandler:nil];
+}
+
+- (IBAction)sendMessageErrorHandler
+{
+    [self.session sendMessage:@{ @"Message" : @(45) }
+                 replyHandler:nil
+                 errorHandler:^(NSError * _Nonnull error) {
+                     NSLog(@"error:\n%@", error);
+                 }];
+}
+
+- (IBAction)sendMessageReplyHandler
+{
+    [self.session sendMessage:@{ @"Message" : @(45) }
+                 replyHandler:^(NSDictionary<NSString *,id> * _Nonnull replyMessage) {
+                     NSLog(@"replyMessage:\n%@", replyMessage);
+                 } errorHandler:nil];
+}
+
+- (IBAction)sendMessageBothHandlers
+{
+    [self.session sendMessage:@{ @"Message" : @(45) }
+                 replyHandler:^(NSDictionary<NSString *,id> * _Nonnull replyMessage) {
+                     NSLog(@"replyMessage:\n%@", replyMessage);
+                 } errorHandler:^(NSError * _Nonnull error) {
+                     NSLog(@"error:\n%@", error);
+                 }];
+}
+
+
 #pragma mark - WCSessionDelegate
 
 - (void)session:(WCSession *)session activationDidCompleteWithState:(WCSessionActivationState)activationState error:(nullable NSError *)error
